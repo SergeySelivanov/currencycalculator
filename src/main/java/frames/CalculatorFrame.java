@@ -22,11 +22,11 @@ public class CalculatorFrame extends JFrame {
     private JFormattedTextField amountField = new JFormattedTextField(NumberFormat.getInstance());
     private JTextField profitField = new JTextField();
     private JXDatePicker datePicker = new JXDatePicker();
-    private JLabel errorMassageLabel = new JLabel();
+    private JTextArea errorMassageLabel = new JTextArea();
 
     public CalculatorFrame() {
         super("Title");
-        this.setBounds(300, 300, 350, 210);
+        this.setBounds(300, 300, 350, 250);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
 
@@ -56,7 +56,9 @@ public class CalculatorFrame extends JFrame {
         button.addActionListener(new CalculatorButtonListener());
         panel.add(button);
 
-        errorMassageLabel.setBounds(10, 170, 280, 30);
+        errorMassageLabel.setBounds(10, 170, 320, 40);
+        errorMassageLabel.setLineWrap(true);
+        errorMassageLabel.setEditable(false);
         errorMassageLabel.setVisible(false);
         panel.add(errorMassageLabel);
 
@@ -71,9 +73,9 @@ public class CalculatorFrame extends JFrame {
             if (StringUtils.isBlank(amountField.getText())) {
                 errorMassageLabel.setVisible(true);
                 errorMassageLabel.setText("Необходимо заполнить поле \"Сумма\"");
-            } else if (datePicker.getDate() == null) {
+            } else if (datePicker.getDate() == null || datePicker.getDate().after(new Date())) {
                 errorMassageLabel.setVisible(true);
-                errorMassageLabel.setText("Необходимо заполнить поле \"Дата покупки\"");
+                errorMassageLabel.setText("Необходимо корректно заполнить поле \"Дата покупки\"");
             } else {
                 errorMassageLabel.setVisible(false);
                 errorMassageLabel.setText(StringUtils.EMPTY);
